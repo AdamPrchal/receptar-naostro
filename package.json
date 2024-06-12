@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "database:reset": "node ./scripts/reset-database.js"
+    "database:init": "node ./scripts/reset-database.js"
   },
   "dependencies": {
     "@faker-js/faker": "^9.0.0-alpha.0",

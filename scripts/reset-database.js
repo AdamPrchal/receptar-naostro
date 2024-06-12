@@ -3,16 +3,17 @@ const { faker } = require("@faker-js/faker");
 const fs = require("fs").promises;
 const path = require("path");
 
-const filepath = "../database.sqlite";
+const FILEPATH = "../database.sqlite";
+const RECIPE_COUNT = 5;
 
 async function resetDB() {
   try {
-    await fs.unlink(path.join(__dirname, filepath));
+    await fs.unlink(path.join(__dirname, FILEPATH));
   } catch (e) {
     console.log("No existing database found, creating a new one.");
   }
 
-  const db = new sqlite3.Database(path.join(__dirname, filepath), (error) => {
+  const db = new sqlite3.Database(path.join(__dirname, FILEPATH), (error) => {
     if (error) {
       return console.error(error.message);
     }
@@ -21,7 +22,7 @@ async function resetDB() {
   await new Promise((resolve, reject) => {
     db.exec(
       `
-      CREATE TABLE IF NOT EXISTS recipes (
+      CREATE TABLE IF NOT EXISTS recipe (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT,
@@ -41,9 +42,10 @@ async function resetDB() {
   });
 
   const insertRecipe = db.prepare(`
-    INSERT INTO recipes (title, description, is_vegetarian, cuisine, preparation_time, image_url, ingredients, steps) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO recipe (title, description, is_vegetarian, cuisine, preparation_time, image_url, ingredients, steps) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `);
-  for (let i = 0; i < 5; i++) {
+
+  for (let i = 0; i < RECIPE_COUNT; i++) {
     insertRecipe.run(
       faker.food.dish(),
       faker.food.description(),

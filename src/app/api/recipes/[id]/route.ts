@@ -6,7 +6,7 @@ export async function GET(request: Request,
     const db = await openDB();
 
     console.log(params.id)
-    const recipe = await db.get('SELECT * FROM recipes WHERE id=?', [params.id]);
+    const recipe = await db.get('SELECT * FROM recipe WHERE id=?', [params.id]);
     await db.close();
     
   return Response.json(recipe)

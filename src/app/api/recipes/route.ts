@@ -2,7 +2,7 @@ import openDB from "@/database/init";
 
 export async function GET() {
   const db = await openDB();
-  const recipes = await db.all("SELECT * FROM recipes");
+  const recipes = await db.all("SELECT * FROM recipe");
   await db.close();
 
   return Response.json({ recipes });

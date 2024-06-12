@@ -13,8 +13,6 @@ Vítejte v repozitáři kurzu "Full Stack Vývojářem za Dva Dny". Tento kurz v
 Všechny prezentace z kurzu jsou k dispozici na následujícím odkazu na Google Disk:
 [Google Disk s Prezentacemi](https://drive.google.com/drive/folders/1QdaleCEmurHOBJE79GsWrcVg4jaXPES7?usp=sharing)
 
-Odkaz na [Figma projekt](https://www.figma.com/design/jEPLuvYKRrxO92Kclztyo7/recept%C3%A1%C5%99-naostro?node-id=0-1&t=KaOSiNnrpsetDMdz-1)
-
 ## Instalace a Nastavení
 
 1. **Klonujte repozitář:**

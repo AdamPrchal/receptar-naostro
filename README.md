@@ -15,6 +15,8 @@ Všechny prezentace z kurzu jsou k dispozici na následujícím odkazu na Google
 
 Odkaz na [Figma projekt](https://www.figma.com/design/jEPLuvYKRrxO92Kclztyo7/recept%C3%A1%C5%99-naostro?node-id=0-1&t=KaOSiNnrpsetDMdz-1)
 
+Odkaz na [Test](https://docs.google.com/forms/d/e/1FAIpQLSe8_syqVoB0OLASYmWk9RRrfkDxeiCFKRbrdhNubbwI8X43Ew/viewform?usp=sf_link)
+
 ## Instalace a Nastavení
 
 1. **Klonujte repozitář:**

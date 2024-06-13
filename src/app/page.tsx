@@ -2,13 +2,13 @@
 
 import { ClockIcon, SearchIcon } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 type Recipe = {
   id: number;
   title: string;
   description: string;
-  is_vegetarian: string;
+  is_vegetarian: boolean;
   cuisine: string;
   preparation_time: number;
   image_url: string;
@@ -20,53 +20,55 @@ export default function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    const getRecipes = async () => {
-      try {
-        const response = await fetch("/api/recipes");
+  const fetchRecipes = async () => {
+    try {
+      const response = await fetch("/api/recipes");
 
-        if (response.ok) {
-          const data = await response.json();
-          setRecipes(data.recipes as Recipe[]);
-        }
-      } catch (error) {
-        console.log(error);
+      if (response.ok) {
+        const data = await response.json();
+        setRecipes(data.recipes as Recipe[]);
+      } else {
+        console.error("Failed to fetch recipes:", response.statusText);
       }
-    };
-    getRecipes();
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRecipes();
   }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
-
   const filteredRecipes = recipes.filter((recipe) =>
     recipe.title.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <main className="flex justify-center flex-col items-center p-24">
-      <h1 className="text-6xl mb-16 font-serif">Your Recipes</h1>
+    <main className="flex flex-col items-center justify-center p-24">
+      <h1 className="mb-16 text-6xl font-serif">Your Recipes</h1>
       <section>
-        <div className="flex mb-8 mx-auto items-center w-[30ch] border-2 border-orange-400 rounded-full bg-white overflow-hidden">
-          <SearchIcon className="size-6 ml-4 mr-1" />
+        <div className="flex items-center w-[30ch] mb-8 mx-auto overflow-hidden bg-white border-2 border-orange-400 rounded-full">
+          <SearchIcon className="ml-4 mr-1 size-6" />
           <input
             type="text"
             value={search}
-            className=" w-full p-2"
+            className="w-full p-2"
             placeholder="Search by name"
             onChange={handleSearchChange}
           />
         </div>
-        <section className="flex justify-center flex-wrap gap-8">
+        <section className="flex flex-wrap justify-center gap-8">
           {filteredRecipes.map((recipe) => (
             <article
               key={recipe.id}
-              className="p-8 w-96 bg-white border-2 border-orange-400 rounded-xl flex flex-col gap-2"
+              className="flex flex-col gap-2 p-8 w-96 bg-white border-2 border-orange-400 rounded-xl"
             >
               <picture>
                 <img
-                  className="rounded-full aspect-square object-cover mx-auto"
+                  className="object-cover mx-auto rounded-full aspect-square"
                   alt="Food image"
                   src={recipe.image_url}
                   width={200}
@@ -75,16 +77,14 @@ export default function Home() {
               </picture>
               <h2 className="text-lg font-medium">{recipe.title}</h2>
               <div className="flex gap-2">
-                {recipe.is_vegetarian ? (
-                  <span className="bg-green-500 text-white px-3 py-1 rounded-full">
-                    Vegetarian
-                  </span>
-                ) : (
-                  <span className="bg-red-400 text-white px-3 py-1 rounded-full">
-                    Meat
-                  </span>
-                )}
-                <span className="bg-orange-400 text-white px-3 py-1 rounded-full">
+                <span
+                  className={`px-3 py-1 rounded-full text-white ${
+                    recipe.is_vegetarian ? "bg-green-500" : "bg-red-400"
+                  }`}
+                >
+                  {recipe.is_vegetarian ? "Vegetarian" : "Meat"}
+                </span>
+                <span className="px-3 py-1 text-white bg-orange-400 rounded-full">
                   {recipe.cuisine}
                 </span>
               </div>
@@ -94,7 +94,7 @@ export default function Home() {
               </div>
               <p className="text-neutral-400">{recipe.description}</p>
               <Link
-                className="bg-orange-400 mt-auto inline-block text-center p-2 font-medium rounded-lg  w-full text-white"
+                className="inline-block w-full p-2 mt-auto text-center text-white bg-orange-400 rounded-lg font-medium"
                 href={`/recipe/${recipe.id}`}
               >
                 Start cooking

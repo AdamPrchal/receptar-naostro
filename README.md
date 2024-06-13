@@ -5,7 +5,7 @@ Vítejte v repozitáři kurzu "Full Stack Vývojářem za Dva Dny". Tento kurz v
 ## Obsah Repozitáře
 
 - **Prezentace:** Soubory prezentací ve formátu PDF.
-- **Startovací šablona projektu:** Šablona Next.js projektu, pro snadný žačátek.
+- **Startovací šablona projektu:** Šablona Next.js projektu, pro snadný začátek.
 - **Finální projekt:** Řešení projektu.
 
 ## Prezentace
